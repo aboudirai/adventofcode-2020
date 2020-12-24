@@ -18,6 +18,7 @@ acc = 0
 pc = 0
 visited = []
 
+print('part 1')
 while pc not in visited:
     visited.append(pc)
     op = inst[pc][0]
@@ -35,26 +36,42 @@ print(acc)
 #------------
 #part 2
 
-acc = 0
-pc = 0
-visited = []
-insts = []
-jmpnnop = 0
-while pc not in visited:
-    visited.append(pc)
-    insts.append(inst)
-    op = inst[pc][0]
-    val = inst[pc][1]
-    if op == 'acc':
-        acc += val
-        pc += 1
-    elif op == 'jmp':
-        pc += val
-        jmpnnop += 1
-    else:
-        pc += 1
-        jmpnnop += 1
+def findCorruptInst():
+    print('part 2')
+    for i in range(len(inst)):
+
+        #flip instruction
+        if inst[i][0] == 'nop':
+            inst[i][0] = 'jmp'
+        elif inst[i][0] == 'jmp':
+            inst[i][0] = 'nop'
+        
+        if inst[i][0] != 'acc':
+            acc = 0
+            pc = 0
+            visited = []
+            while pc not in visited and pc < (len(inst)):
+                visited.append(pc)
+                op = inst[pc][0]
+                val = inst[pc][1]
+                if op == 'acc':
+                    acc += val
+                    pc += 1
+                elif op == 'jmp':
+                    pc += val
+                else:
+                    pc += 1
+           
+            #if fix caused correct termination
+            if pc == len(inst):
+                print(acc)
+                return
+
+        #replace instruction
+        if inst[i][0] == 'nop':
+            inst[i][0] = 'jmp'
+        elif inst[i][0] == 'jmp':
+            inst[i][0] = 'nop'
 
 
-print(jmpnnop)
-print(len(insts))
+findCorruptInst()
