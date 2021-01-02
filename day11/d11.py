@@ -1,6 +1,6 @@
 inst = []
 
-with open("input.txt") as file:
+with open("input2.txt") as file:
     for line in file.readlines():
         temp = []
         for i in line.strip():
@@ -65,56 +65,10 @@ def checkVacancy(x, y):
         return 0
 
 
-def checkAllVacancies(a):
-    arr = []
-    for i in range(len(a)):
-        arr.append([])
-        for j in range(len(a[0])):
-            arr[i].append(checkVacancy(j, i))
-
-    return arr
-
-
-def main():
-    val = -1
-    occCount = 0
-    isEq = False
-    while not isEq:
-        isEq = True
-        vals = checkAllVacancies(inst)
-        for y in range(len(inst)):
-            for x in range(len(inst[0])):
-                val = vals[y][x]
-                curr = inst[y][x]
-                if curr == 'L' and val == 1:
-                    inst[y][x] = '#'
-                    occCount += 1
-                    isEq = False
-                if curr == '#' and val == 2:
-                    inst[y][x] = 'L'
-                    occCount -= 1
-                    isEq = False
-
-
-    print(occCount)
-
-
-print('part 1')
-main()
-
-#-----------------------------------
-#part 2
-
-
+#part 2 addition
 #returns 1 if no occupied seats, 2 if four or more, else 0
 def checkVacancy2(x, y):
     occ = 0
-
-    edges.append(x < len(inst[0]) - 1)
-    edges.append(x > 0)
-    edges.append(y < len(inst) - 1)
-    edges.append(y > 0)
-
 
     #check for occupancy
 
@@ -137,7 +91,7 @@ def checkVacancy2(x, y):
         if (y1 > 0) and inst[y1][x1] == '#' and not toprightFound:
             occ += 1
             toprightFound = True
-        elif (tempY > 0) and inst[y1][x1] == 'L':
+        elif (y1 > 0) and inst[y1][x1] == 'L':
             toprightFound = True
     
         #botright
@@ -158,7 +112,7 @@ def checkVacancy2(x, y):
     leftFound = False
     topleftFound = False
     botleftFound = False
-    while (x1 >= 0 and ((y2 <= len(inst) - 1) or (y1 >= 0)):
+    while x1 >= 0 and ((y2 <= len(inst) - 1) or (y1 >= 0)):
 
         #left
         if inst[y][x1] == '#' and not leftFound: #left
@@ -207,6 +161,7 @@ def checkVacancy2(x, y):
 
         y1+=1
 
+    print('finished')
 
     if occ == 0:
         return 1
@@ -214,8 +169,55 @@ def checkVacancy2(x, y):
         return 2
     else:
         return 0
+    
+
+def checkAllVacancies(a):
+    arr = []
+    for i in range(len(a)):
+        arr.append([])
+        for j in range(len(a[0])):
+            #arr[i].append(checkVacancy(j, i)) #part 1
+            arr[i].append(checkVacancy2(j, i)) #part 2
+
+    return arr
 
 
+def main():
+    val = -1
+    occCount = 0
+    isEq = False
+    while not isEq:
+        isEq = True
+        #vals = checkAllVacancies(inst) #part 1
+        vals = checkAllVacancies(inst) #part 2 addition
+        for y in range(len(inst)):
+            for x in range(len(inst[0])):
+                val = vals[y][x]
+                curr = inst[y][x]
+                if curr == 'L' and val == 1:
+                    inst[y][x] = '#'
+                    occCount += 1
+                    isEq = False
+                if curr == '#' and val == 2:
+                    inst[y][x] = 'L'
+                    occCount -= 1
+                    isEq = False
+
+
+    print(occCount)
+
+
+print('part 1')
+#main()
+
+#----------------------------------------------
+#part 2
+
+# see checkVacancy2(x, y)
+
+
+#part 2
+main()
 
 
 
