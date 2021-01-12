@@ -45,6 +45,7 @@ for i in inst:
 
 print('part 1')
 print(abs(horz) + abs(vert))
+print()
 
 #################################
 #part 2
@@ -52,58 +53,31 @@ d = 1
 
 vert = 0
 horz = 0
-wvert = 10
-whorz = 1
+wvert = 1
+whorz = 10
 
 for i in inst:
     code = i[0]
     mag = int(i[1:])
     
-    rot = 0
-    
     if code in 'RL':
-        rot = mag // 90 #int division to get number of rotations
-        if rot == 180:
+        if mag == 180:
             wvert *= -1
             whorz *= -1
         elif code == 'R':
-            if wvert > 0:
-                if whorz > 0:
-                    temp = whorz
-                    whorz = wvert
-                    wvert = -1 * temp
-                else:
-                    temp = whorz
-                    whorz = wvert
-                    wvert = -1 * temp
-            else:
-                if whorz > 0:
-                    temp = whorz
-                    whorz = wvert
-                    wvert = -1 * temp
-                else:
-                    temp = whorz
-                    whorz = wvert
-                    wvert = -1 * temp
+            if mag == 270:
+                wvert *= -1
+                whorz *= -1
+            temp = wvert
+            wvert = -1 * whorz
+            whorz = temp
         elif code == 'L':
-            if wvert > 0:
-                if whorz > 0:
-                    temp = whorz
-                    whorz = -1 * wvert
-                    wvert = temp
-                else:
-                    temp = whorz
-                    whorz = -1 * wvert
-                    wvert = temp
-            else:
-                if whorz > 0:
-                    temp = whorz
-                    whorz = -1 * wvert
-                    wvert = temp
-                else:
-                    temp = whorz
-                    whorz = -1 * wvert
-                    wvert = temp
+            if mag == 270:
+                wvert *= -1
+                whorz *= -1
+            temp = whorz
+            whorz = -1 * wvert
+            wvert = temp
     elif code == 'F':
         vert += (mag * wvert)
         horz += (mag * whorz)
@@ -115,7 +89,10 @@ for i in inst:
         whorz += mag
     elif code == 'W':
         whorz -= mag
-
+    
+    print(vert)
+    print(horz)
+    print()
 
 print('part 2')
 print(abs(horz) + abs(vert))
