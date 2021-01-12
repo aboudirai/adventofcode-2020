@@ -49,7 +49,6 @@ print()
 
 #################################
 #part 2
-d = 1
 
 vert = 0
 horz = 0
@@ -61,7 +60,7 @@ for i in inst:
     mag = int(i[1:])
     
     if code in 'RL':
-        if mag == 180:
+        if mag == 180: #180 or 270
             wvert *= -1
             whorz *= -1
         elif code == 'R':
@@ -89,12 +88,7 @@ for i in inst:
         whorz += mag
     elif code == 'W':
         whorz -= mag
-    
-    print(vert)
-    print(horz)
-    print()
+
 
 print('part 2')
 print(abs(horz) + abs(vert))
-
-
