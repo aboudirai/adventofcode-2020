@@ -203,6 +203,10 @@ def main():
                     occCount -= 1
                     isEq = False
 
+        print('loop')
+        print(occCount)
+        print(inst)
+        print(vals)
 
     print(occCount)
 
